@@ -1,5 +1,8 @@
 package com.flippinbits.kcorey.hellodemo.circus;
 
+import com.flippinbits.kcorey.hellodemo.circus.events.CEvent;
+import com.flippinbits.kcorey.hellodemo.circus.states.CState;
+
 public abstract class CirBack {
 
     private String name;
