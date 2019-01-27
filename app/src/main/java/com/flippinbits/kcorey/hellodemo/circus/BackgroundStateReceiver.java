@@ -2,6 +2,6 @@ package com.flippinbits.kcorey.hellodemo.circus;
 
 import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 
-interface BackgroundStateReceiver {
+public interface BackgroundStateReceiver {
     void renderNewState(CState newState);
 }

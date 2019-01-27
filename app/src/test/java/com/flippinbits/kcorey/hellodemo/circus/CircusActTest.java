@@ -8,7 +8,9 @@ import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -16,17 +18,22 @@ import java.util.concurrent.ExecutionException;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
-public class CirBackTest implements BackgroundStateReceiver {
+public class CircusActTest implements BackgroundStateReceiver {
 
     Circus circus;
     CState state;
 
     CompletableFuture<String> future;
 
+    @Rule
+    public TestName name = new TestName();
+
+
     @Before
     public void setUp() throws Exception {
+        Twig.d("=======  test " + name.getMethodName());
         circus = Circus.getCircus();
-        circus.setStateRecevier(this);
+        circus.setStateReceiver(this);
         future = new CompletableFuture<>();
     }
 
@@ -39,20 +46,20 @@ public class CirBackTest implements BackgroundStateReceiver {
     }
 
     @Test
-    public void cirBackExists() {
-        MockCirBack mockCirBack = new MockCirBack();
+    public void cirActExists() {
+        MockCirAct mockCirAct = new MockCirAct();
 
-        String description = mockCirBack.toString();
+        String description = mockCirAct.toString();
 
-        assertNotNull(mockCirBack);
+        assertNotNull(mockCirAct);
         assertNotNull(description);
     }
 
     @Test
-    public void cirBackRendersProperly() {
-        MockCirBack mockCirBack = new MockCirBack();
+    public void cirActRendersProperly() {
+        MockCirAct mockCirAct = new MockCirAct();
 
-        mockCirBack.render(new CSHello());
+        mockCirAct.render(new CSHello("cirActRendersProperly"));
 
         try {
             String result = future.get();
@@ -63,7 +70,7 @@ public class CirBackTest implements BackgroundStateReceiver {
         }
 
         Assert.assertNotNull(state);
-        assertEquals(state, new CSHello());
+        assertEquals(state, new CSHello("cirActRendersProperly"));
 
     }
 
@@ -75,7 +82,7 @@ public class CirBackTest implements BackgroundStateReceiver {
     }
 
 
-    class MockCirBack extends CirBack {
+    class MockCirAct extends CircusAct {
 
         @Override
         public CState getState() {

@@ -3,11 +3,11 @@ package com.flippinbits.kcorey.hellodemo.circus;
 import com.flippinbits.kcorey.hellodemo.circus.events.CEvent;
 import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 
-public abstract class CirBack {
+public abstract class CircusAct {
 
     private String name;
 
-    public CirBack() {
+    public CircusAct() {
         this.name = this.getClass().getSimpleName();
     }
 

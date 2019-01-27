@@ -1,5 +1,6 @@
 package com.flippinbits.kcorey.hellodemo.circus;
 
+import com.flippinbits.kcorey.hellodemo.circus.acts.SplashAct;
 import com.flippinbits.kcorey.hellodemo.circus.events.CEvent;
 import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 
@@ -7,8 +8,9 @@ public class Circus implements EventReceiver {
 
     private static Circus instance;
 
-    private CirBack back;
-    private BackgroundStateReceiver stateRecevier;
+    private CircusAct act;
+    private BackgroundStateReceiver stateReceiver;
+    private Thread eventThread;
 
     private Circus() {
         instance = this;
@@ -16,44 +18,63 @@ public class Circus implements EventReceiver {
 
     public static Circus getCircus() {
         if (instance == null) {
+            Twig.d("Circus created.");
             instance = new Circus();
+
+            instance.setAct(new SplashAct());
         }
         return instance;
     }
 
     @Override
-    public void reportEvent(CEvent theEvent) {
+    public void reportEvent(final CEvent theEvent) {
 
-        if (back != null) {
+        if (act != null) {
             Twig.d("  --> reportEvent: " + theEvent.toString());
-            back.handleEvent(theEvent);
+            /*
+             * Watch out here!  We're creating a single thread, and assigning it to a field in Circus.
+             */
+            eventThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    act.handleEvent(theEvent);
+                }
+            });
+            eventThread.start();
         } else {
             Twig.d("  -X-> reportEvent: " + theEvent.toString() + " (no handler)");
         }
     }
 
     public void render(CState state) {
-        if (stateRecevier != null) {
-            Twig.d("  <-- " + state.toString());
-            stateRecevier.renderNewState(state);
+        if (stateReceiver != null) {
+            Twig.d("  <-- render " + state.toString());
+            stateReceiver.renderNewState(state);
         } else {
-            Twig.d("  <-X- " + state.toString() + " (no receiver)");
+            Twig.d("  <-X- render " + state.toString() + " (no receiver)");
         }
     }
 
     public void destroyCircus() {
-        back = null;
-        stateRecevier = null;
+        act = null;
+        stateReceiver = null;
         instance = null;
 
     }
 
-    public void setBack(CirBack newBack) {
-        this.back = newBack;
-
+    public void setAct(CircusAct newAct) {
+        Twig.d("  ^^^ New Act: " + newAct);
+        this.act = newAct;
     }
 
-    public void setStateRecevier(BackgroundStateReceiver stateRecevier) {
-        this.stateRecevier = stateRecevier;
+    public void setStateReceiver(BackgroundStateReceiver stateReceiver) {
+        Twig.d("  vvv New StateReceiver");
+        this.stateReceiver = stateReceiver;
+    }
+
+    public void removeStateReceiver(BackgroundStateReceiver stateReceiver) {
+        if (this.stateReceiver.equals(stateReceiver)) {
+            this.stateReceiver = null;
+        }
     }
 }

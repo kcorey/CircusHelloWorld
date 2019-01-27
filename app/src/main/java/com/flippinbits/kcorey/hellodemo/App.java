@@ -6,7 +6,7 @@ import com.flippinbits.kcorey.hellodemo.circus.Circus;
 
 public class App extends Application {
     Circus circus;
-    private App instance;
+    private static App instance;
 
     @Override
     public void onCreate() {
@@ -14,5 +14,9 @@ public class App extends Application {
         circus = Circus.getCircus();
 
         instance = this;
+    }
+
+    public static App getApp() {
+        return instance;
     }
 }
