@@ -14,7 +14,7 @@ Just remember that Acts aren't tied to Activities.  They sit on top of Plug-ins.
 
 You could have all the Activities of your whole app controlled by a single Act if that makes sense.
 
-In a larger app, it would make sense to split the different user journeys into the Acts as there's usually a synergy.  A login-journey, an add-an-item journey, a payment-journey, etc.
+In a larger app, it would make sense to split the different user journeys into the Acts as there's usually a synergy.  A login-journey, an add-an-item journey, a payment-journey, etc, could all have multiple screens....data entry, network access and so on, but it still might make sense to gropu them by part of the app you're working on rather than all lumped into a single directory.
 
 This version now *does* demonstrate background processing in the class 'LongRunningPlugin'.  Note that it's called from an Act, which means we are already on a new background thread.  That means that we can block all we want, and we won't cause any issues.  Further, the counter information is saved, so that when the UI needs to be redrawn, the information is readily available.
 
