@@ -73,7 +73,8 @@ public class Circus implements EventReceiver {
     }
 
     public void removeStateReceiver(BackgroundStateReceiver stateReceiver) {
-        if (this.stateReceiver.equals(stateReceiver)) {
+        if (this.stateReceiver != null
+                && this.stateReceiver.equals(stateReceiver)) {
             this.stateReceiver = null;
         }
     }
