@@ -103,7 +103,6 @@ public class SplashActTest implements StateReceiver, BackgroundStateReceiver {
         assertEquals(event, new CEResumed("CSMock"));
         assertNotNull(state);
         assertEquals(state, new CSHello("MockAct"));
-
     }
 
 
