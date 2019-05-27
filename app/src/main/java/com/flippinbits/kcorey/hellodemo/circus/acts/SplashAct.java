@@ -13,6 +13,8 @@ import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 public class SplashAct extends CircusAct {
 
     private static final String TAG = "SplashAct";
+    public static final int SECONDS_TO_SHOW_SPLASH_IN_MILLIS = 2000;
+
     /**
      * getState - used to return a state pojo with our current state.
      *
@@ -20,7 +22,7 @@ public class SplashAct extends CircusAct {
      */
     @Override
     public CState getState() {
-        return new CSSplash();
+        return new CSSplash("Created Splash");
     }
 
     /**
@@ -37,8 +39,8 @@ public class SplashAct extends CircusAct {
             Circus.getCircus().render(getState());
 
             try {
-                Thread.sleep(5000);
-                Circus.getCircus().render(new CSHello("From Splash"));
+                Thread.sleep(SECONDS_TO_SHOW_SPLASH_IN_MILLIS);
+                Circus.getCircus().render(new CSHello("From Splash", 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

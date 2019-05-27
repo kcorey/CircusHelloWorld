@@ -2,6 +2,7 @@ package com.flippinbits.kcorey.hellodemo.circus;
 
 import com.flippinbits.kcorey.hellodemo.circus.acts.SplashAct;
 import com.flippinbits.kcorey.hellodemo.circus.events.CEvent;
+import com.flippinbits.kcorey.hellodemo.circus.plugins.LongRunningPlugin;
 import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 
 public class Circus implements EventReceiver {
@@ -11,6 +12,7 @@ public class Circus implements EventReceiver {
     private CircusAct act;
     private BackgroundStateReceiver stateReceiver;
     private Thread eventThread;
+    private static LongRunningPlugin longRunningPlugin;
 
     private Circus() {
         instance = this;
@@ -22,6 +24,8 @@ public class Circus implements EventReceiver {
             instance = new Circus();
 
             instance.setAct(new SplashAct());
+
+            instance.getLongRunningPlugin();
         }
         return instance;
     }
@@ -77,5 +81,16 @@ public class Circus implements EventReceiver {
                 && this.stateReceiver.equals(stateReceiver)) {
             this.stateReceiver = null;
         }
+    }
+
+    public LongRunningPlugin getLongRunningPlugin() {
+        if (Circus.longRunningPlugin == null) {
+            setLongRunningPlugin(new LongRunningPlugin());
+        }
+        return Circus.longRunningPlugin;
+    }
+
+    public void setLongRunningPlugin(LongRunningPlugin longRunningPlugin) {
+        Circus.longRunningPlugin = longRunningPlugin;
     }
 }
