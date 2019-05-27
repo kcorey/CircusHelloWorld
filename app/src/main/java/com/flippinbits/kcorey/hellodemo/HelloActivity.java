@@ -59,6 +59,8 @@ public class HelloActivity extends CircusActivity {
 
             TextView centerLabel = findViewById(R.id.center_label);
             centerLabel.setText(helloState.getMessageToShow());
+            counterText.setText(String.format("%d",helloState.getCurrentCounter()));
+
         } else if (newState instanceof CSLongRunning) {
             CSLongRunning csLongRunning = (CSLongRunning) newState;
             counterText.setText(String.format("%d",csLongRunning.getCounter()));
