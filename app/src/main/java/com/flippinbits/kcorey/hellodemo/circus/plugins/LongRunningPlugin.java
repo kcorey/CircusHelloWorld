@@ -16,10 +16,6 @@ public class LongRunningPlugin implements EventReporter {
         keepRunning = false;
     }
 
-    public LongRunningPlugin(boolean keepRunning) {
-        this.keepRunning = keepRunning;
-    }
-
     public void theOneLongFunction(CEvent theEvent) {
         while(keepRunning) {
             try {

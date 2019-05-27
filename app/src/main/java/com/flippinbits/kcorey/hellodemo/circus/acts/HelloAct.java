@@ -15,6 +15,7 @@ import com.flippinbits.kcorey.hellodemo.circus.states.CState;
 public class HelloAct extends CircusAct {
 
     private static final String TAG = "HelloAct";
+    public static final int SECONDS_TO_PROCESS_HELLO_IN_MILLIS = 2000;
 
     private String messageState = "Initial Hello.";
 
@@ -32,7 +33,7 @@ public class HelloAct extends CircusAct {
             Circus.getCircus().render(getState());
 
             try {
-                Thread.sleep(5000);
+                Thread.sleep(SECONDS_TO_PROCESS_HELLO_IN_MILLIS);
                 Circus.getCircus().render(new CSHello("Final Hello.", currentcounter));
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -42,12 +43,14 @@ public class HelloAct extends CircusAct {
             currentcounter = lre.getCounter();
 
             Circus.getCircus().render(new CSLongRunning(currentcounter));
-        } else if (theEvent instanceof CEToggleButtonClicked) {
 
+        } else if (theEvent instanceof CEToggleButtonClicked) {
             Circus.getCircus().getLongRunningPlugin().toggleRunning();
+
         } else {
             // Don't expect that event.  Punt and report it for tracking down.
             Log.d(TAG, "handleEvent: unexpected event " + theEvent.toString());
+
         }
     }
 }

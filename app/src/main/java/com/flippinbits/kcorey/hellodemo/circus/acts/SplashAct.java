@@ -44,9 +44,11 @@ public class SplashAct extends CircusAct {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         } else {
             // Don't expect that event.  Punt and report it for tracking down.
             Log.d(TAG, "handleEvent: unexpected event " + theEvent.toString());
+
         }
     }
 }
