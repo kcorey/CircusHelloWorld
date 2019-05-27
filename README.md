@@ -15,3 +15,7 @@ Just remember that Acts aren't tied to Activities.  They sit on top of Plug-ins.
 You could have all the Activites of your whole app controlled by a single Act if that makes sense.  
 
 In a larger app, it would make sense to split the different user hournies into the Acts as there's usually a synergy.  A login-journey, an add-an-item journey, a payment-journey, etc.
+
+This version doesn't demonstrate shunting the events on to/off of a background thread, so it isn't quite suitable for use in an app.
+
+Note to self: Update this to show the proper back-end thread handling, along with a long-running dummy back end service to show why.
